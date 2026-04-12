@@ -1,0 +1,607 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8"/>
+    <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+    <meta name="description" content="Warren Whitehurst – Web Developer &amp; Designer at ADvine Agency. Specializing in high-performance web applications, WordPress solutions, and React development."/>
+    <title>Warren Whitehurst | Web Designer | SEO Specialist</title>
+    
+    <!-- Design System Fonts: Manrope & Cal Sans -->
+    <link href="https://api.fontshare.com/v2/css?f[]=cal-sans@400,700&f[]=manrope@400,500,600,700,800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+    
+    <link href="style.css" rel="stylesheet"/>
+    <style>
+        #three-canvas {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -10;
+            pointer-events: none;
+            background-color: var(--surface);
+        }
+        /* Hide original blob since we have Three.js now */
+        .hero-blob {
+            display: none !important;
+        }
+    </style>
+</head>
+<body>
+
+<canvas id="three-canvas"></canvas>
+
+<!-- Mobile Navigation Drawer -->
+<nav class="mobile-nav" id="mobileNav" aria-label="Mobile navigation">
+    <button class="hamburger open" id="mobileNavClose" aria-label="Close menu" aria-expanded="true">
+        <span></span>
+        <span></span>
+        <span></span>
+    </button>
+    <a class="mobile-nav-link active" href="#gallery" onclick="closeMobileNav()">Work</a>
+    <a class="mobile-nav-link" href="#expertise" onclick="closeMobileNav()">Expertise</a>
+    <a class="mobile-nav-link" href="#about" onclick="closeMobileNav()">About</a>
+    <a class="btn-primary btn-large" href="#contact" style="margin-top:1rem;" onclick="closeMobileNav()">Hire Me</a>
+</nav>
+
+<!-- Top Navigation -->
+<nav id="main-nav" class="nav-bar ambient-shadow" aria-label="Main navigation">
+    <div class="nav-inner">
+        <div style="font-size: 1.5rem; font-weight: 800; letter-spacing: -0.05em;">Warren Whitehurst<span class="text-primary">.</span></div>
+        <div class="nav-links">
+            <a class="nav-link active" href="#gallery">Work</a>
+            <a class="nav-link" href="#expertise">Expertise</a>
+            <a class="nav-link" href="#about">About</a>
+        </div>
+        <div class="flex items-center" style="gap: 1rem;">
+            <a class="btn-primary md-flex" href="#contact">Connect</a>
+            <!-- Hamburger — mobile only -->
+            <button class="hamburger" id="hamburgerBtn" aria-label="Open menu" aria-expanded="false" aria-controls="mobileNav" onclick="openMobileNav()">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+        </div>
+    </div>
+</nav>
+
+<main style="padding-top: 6rem;">
+    <!-- Hero Section -->
+    <section class="hero-section container">
+        <div class="relative" style="max-width: 56rem; display: flex; flex-direction: column; gap: 1.5rem;">
+            <span id="hero-eyebrow" class="label-md text-primary">Web Developer &amp; Designer | SEO Specialist</span>
+            <h1 id="hero-heading" class="hero-heading">
+                Building <br/>
+                <span class="text-gradient">High-Performance <br/> Web Solutions.</span>
+            </h1>
+            <p id="hero-para" class="text-on-surface-variant" style="font-size: 1.25rem; max-width: 42rem;">
+                Scaling enterprise digital infrastructure with agency-grade precision. I build high-performance web applications that bridge the gap between complex code and seamless user experience.
+            </p>
+            <div id="hero-cta" style="padding-top: 2rem; display: flex; flex-wrap: wrap; gap: 1.5rem; align-items: center;">
+                <a class="btn-primary btn-large" href="#gallery">View Projects</a>
+                <a class="flex items-center text-primary" href="#about" style="font-weight: 700; gap: 0.5rem; border-bottom: 2px solid transparent;">
+                    My Experience
+                    <span class="material-symbols-outlined">arrow_right_alt</span>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Featured Projects Section -->
+    <section id="gallery" class="section-py" style="background-color: var(--surface-container-low);">
+        <div class="container" style="display: flex; flex-direction: column; gap: 2rem;">
+            <div class="md-flex justify-between items-end" style="gap: 2rem;">
+                <div class="relative">
+                    <div class="ember-indicator"></div>
+                    <h2 class="section-heading-lg">Featured Projects</h2>
+                </div>
+                <p class="text-on-surface-variant" style="max-width: 28rem; text-align: right;">
+                    A selection of recent websites and web applications focused on performance and user experience.
+                </p>
+            </div>
+            
+            <div id="gallery-grid" class="projects-grid">
+                <div class="col-span-8 project-card aspect-video">
+                    <img alt="The Standard Restaurant Landing Page UI" src="Standard.png"/>
+                    <div class="project-overlay">
+                        <span class="label-md text-primary" style="margin-bottom: 0.5rem;">Performance-Driven Landing Pages</span>
+                        <h3 style="font-size: 1.875rem;">The Standard</h3>
+                        <div class="project-details">
+                            <div class="project-badges">
+                                <span class="badge-sm">WordPress</span>
+                                <span class="badge-sm">Elementor</span>
+                                <span class="badge-sm">SEO</span>
+                            </div>
+                            <p class="project-outcome">Targeted SEO for Whiskey/Halloween Campaigns.</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-span-4 project-card" style="min-height: 400px;">
+                    <img alt="HOPE Animal Foundation Non-Profit Website" src="Hope.png"/>
+                    <div class="project-overlay">
+                        <span class="label-md text-primary" style="margin-bottom: 0.5rem;">Non-Profit Web Management</span>
+                        <h3 style="font-size: 1.5rem;">HOPE Animal Foundation</h3>
+                        <div class="project-details">
+                            <div class="project-badges">
+                                <span class="badge-sm">WordPress</span>
+                                <span class="badge-sm">PHP</span>
+                                <span class="badge-sm">cPanel</span>
+                            </div>
+                            <p class="project-outcome">Streamlined adoption forms & non-profit management.</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-span-4 project-card aspect-square">
+                    <img alt="Bog House Pub Hospitality Web Design" src="Bog.png"/>
+                    <div class="project-overlay">
+                        <span class="label-md text-primary" style="margin-bottom: 0.5rem;">Hospitality &amp; UI Design</span>
+                        <h3 style="font-size: 1.5rem;">Bog House Pub</h3>
+                        <div class="project-details">
+                            <div class="project-badges">
+                                <span class="badge-sm">Figma</span>
+                                <span class="badge-sm">Adobe CC</span>
+                                <span class="badge-sm">WordPress</span>
+                            </div>
+                            <p class="project-outcome">Modern hospitality UI with 35% increased engagement.</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-span-8 project-card" style="min-height: 300px;">
+                    <img alt="Visit Merced Tourism &amp; UX Strategy" src="Merced.png"/>
+                    <div class="project-overlay">
+                        <span class="label-md text-primary" style="margin-bottom: 0.5rem;">Strategic UX &amp; Sitemap Architecture</span>
+                        <h3 style="font-size: 1.875rem;">Visit Merced</h3>
+                        <div class="project-details">
+                            <div class="project-badges">
+                                <span class="badge-sm">UX Design</span>
+                                <span class="badge-sm">Sitemap Strategy</span>
+                                <span class="badge-sm">SEO</span>
+                            </div>
+                            <p class="project-outcome">Architected complex navigation for 50+ tourism pages.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Trust Signals Logo Marquee -->
+    <section class="section-pb" style="background-color: var(--surface-container-low); overflow: hidden; padding-top: 0;">
+        <div class="container">
+            <p class="label-md text-on-surface-variant text-center" style="margin-bottom: 2rem; opacity: 0.7;">Tech Stack</p>
+            <div>
+                <div class="marquee-content" style="animation: none; width: 100%; justify-content: center; flex-wrap: wrap; gap: 3rem; margin-top: 1rem;">
+                    <!-- Agency Core -->
+                    <img src="https://cdn.simpleicons.org/wordpress/ffffff" alt="WordPress" title="WordPress" />
+                    <img src="https://cdn.simpleicons.org/php/ffffff" alt="PHP" title="PHP" />
+                    <img src="https://cdn.simpleicons.org/elementor/ffffff" alt="Elementor" title="Elementor" />
+                    <!-- Modern Dev -->
+                    <img src="https://cdn.simpleicons.org/react/ffffff" alt="React" title="React" />
+                    <img src="https://cdn.simpleicons.org/nodedotjs/ffffff" alt="Node.js" title="Node.js" />
+                    <img src="https://cdn.simpleicons.org/shopify/ffffff" alt="Shopify" title="Shopify" />
+                    <!-- Creative -->
+                    <img src="https://cdn.simpleicons.org/adobecreativecloud/ffffff" alt="Adobe" title="Adobe" />
+                    <img src="https://cdn.simpleicons.org/figma/ffffff" alt="Figma" title="Figma" />
+                    <!-- AI -->
+                    <img src="https://cdn.simpleicons.org/n8n/ffffff" alt="n8n" title="n8n" />
+                    <img src="https://cdn.simpleicons.org/googlegemini/ffffff" alt="Gemini" title="Gemini" />
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Technical Expertise Section -->
+    <section id="expertise" class="section-py container">
+        <div class="flex flex-col items-center text-center" style="margin-bottom: 5rem;">
+            <div class="relative">
+                <div class="ember-indicator ember-indicator-center"></div>
+                <h2 class="section-heading-xl">Technical Expertise</h2>
+            </div>
+            <p class="text-on-surface-variant" style="max-width: 42rem; margin-top: 2rem; font-size: 1.125rem;">
+                I leverage advanced web technologies and AI to deliver high-performance, cost-effective solutions for complex digital challenges.
+            </p>
+        </div>
+        
+        <div id="tech-grid" class="tech-grid">
+            <div class="tech-card">
+                <div class="tech-icon-row">
+                    <img src="https://cdn.simpleicons.org/wordpress/21759b" alt="WordPress" width="28" height="28"/>
+                    <img src="https://cdn.simpleicons.org/php/777BB4" alt="PHP" width="28" height="28"/>
+                    <img src="https://cdn.simpleicons.org/elementor/92003B" alt="Elementor" width="28" height="28"/>
+                </div>
+                <span class="label-md text-primary">Agency Core</span>
+                <h3 style="font-size: 1.5rem;">WordPress &amp; PHP</h3>
+                <p class="text-on-surface-variant" style="font-size: 0.875rem;">Elementor, Divi, WPBakery, cPanel, and deep SEO &amp; Speed Optimization.</p>
+            </div>
+            <div class="tech-card">
+                <div class="tech-icon-row">
+                    <img src="https://cdn.simpleicons.org/react/61DAFB" alt="React" width="28" height="28"/>
+                    <img src="https://cdn.simpleicons.org/nodedotjs/5FA04E" alt="Node.js" width="28" height="28"/>
+                    <img src="https://cdn.simpleicons.org/shopify/96bf48" alt="Shopify" width="28" height="28"/>
+                    <img src="https://cdn.simpleicons.org/github/ffffff" alt="GitHub" width="28" height="28"/>
+                </div>
+                <span class="label-md text-primary">Modern Dev</span>
+                <h3 style="font-size: 1.5rem;">React &amp; Node</h3>
+                <p class="text-on-surface-variant" style="font-size: 0.875rem;">Bespoke web applications, Shopify Liquid themes, and version control with <a href="https://github.com/Whitehurst87" target="_blank" class="text-primary" style="font-weight: 700;">GitHub</a>.</p>
+            </div>
+            <div class="tech-card">
+                <div class="tech-icon-row">
+                    <svg class="tech-icon" width="28" height="28" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Adobe Creative Cloud" style="fill:#FF0000;">
+                        <path d="M13.966 22.624l-1.69-4.281H7.122l3.867-9.76 5.852 14.041h-2.875zM7.816 0H0v22.23l7.816-22.23zm8.378 0l7.806 22.23V0h-7.806z"/>
+                    </svg>
+                    <img src="https://cdn.simpleicons.org/figma/F24E1E" alt="Figma" width="28" height="28"/>
+                </div>
+                <span class="label-md text-primary">Creative</span>
+                <h3 style="font-size: 1.5rem;">Adobe &amp; Figma</h3>
+                <p class="text-on-surface-variant" style="font-size: 0.875rem;">Full-spectrum design from wireframes and sitemaps to high-fidelity UI/UX mockups.</p>
+            </div>
+            <div class="tech-card">
+                <div class="tech-icon-row">
+                    <img src="https://cdn.simpleicons.org/n8n/EA4B71" alt="n8n" width="28" height="28"/>
+                    <img src="https://cdn.simpleicons.org/googlegemini/8E75B2" alt="Google Gemini" width="28" height="28"/>
+                    <img src="https://cdn.simpleicons.org/ollama/ffffff" alt="Ollama" width="28" height="28"
+                         onerror="this.replaceWith(Object.assign(document.createElement('span'),{className:'tech-text-badge',textContent:'Ollama'}))"/>
+                    <img src="https://cdn.simpleicons.org/cline/ffffff" alt="Cline" width="28" height="28"
+                         onerror="this.replaceWith(Object.assign(document.createElement('span'),{className:'tech-text-badge',textContent:'Cline'}))"/>
+                </div>
+                <span class="label-md text-primary">AI &amp; Efficiency</span>
+                <h3 style="font-size: 1.5rem;">Agentic Flows</h3>
+                <p class="text-on-surface-variant" style="font-size: 0.875rem;">Implemented local LLM workflows that reduced manual SEO auditing time by 60% for agency clients.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Professional Background Section -->
+    <section id="about" class="section-py container">
+        <div class="about-flex">
+            <div id="about-photo" class="about-photo-wrap">
+                <div class="photo-container">
+                    <img alt="Warren Whitehurst" src="portfolio-pic.png"/>
+                </div>
+            </div>
+            <div id="about-text" class="about-content">
+                <div class="relative">
+                    <div class="ember-indicator"></div>
+                    <h2 class="section-heading-md">Professional Background</h2>
+                </div>
+                <div class="flex flex-col" style="gap: 1rem; margin-top: 2rem; color: var(--on-surface-variant); font-size: 1.125rem;">
+                    <p>I specialize in the full lifecycle of the web, blending agency-grade discipline with experimental curiosity:</p>
+                    <ul style="list-style: none; padding: 0; display: flex; flex-direction: column; gap: 0.75rem;">
+                        <li class="flex items-center" style="gap: 0.75rem;"><span class="text-primary">→</span> Strategic Sitemaps & Architecture</li>
+                        <li class="flex items-center" style="gap: 0.75rem;"><span class="text-primary">→</span> High-Fidelity UI/UX Design</li>
+                        <li class="flex items-center" style="gap: 0.75rem;"><span class="text-primary">→</span> Performance-First Development</li>
+                        <li class="flex items-center" style="gap: 0.75rem;"><span class="text-primary">→</span> Post-Launch Speed & SEO Optimization</li>
+                    </ul>
+                    <p style="margin-top: 0.5rem;">Currently managing 30+ enterprise sites and spearheading major launches at ADvine Agency.</p>
+                </div>
+                <div class="stats-grid">
+                    <div class="stat-item">
+                        <span class="stat-number" data-count="30" data-suffix="+">30+</span>
+                        <p class="label-md">Sites Managed</p>
+                    </div>
+                    <div class="stat-item">
+                        <span class="stat-number" data-count="10" data-suffix="+">10+</span>
+                        <p class="label-md">Agency Launches</p>
+                    </div>
+                    <div class="stat-item">
+                        <span class="stat-number">Hybrid</span>
+                        <p class="label-md">Design & Dev</p>
+                    </div>
+                    <div class="stat-item">
+                        <span class="stat-number" data-count="100" data-suffix="%">100%</span>
+                        <p class="label-md">Commitment</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Let's Talk Section -->
+    <section id="contact" class="container">
+        <div class="contact-section">
+            <div class="ember-indicator ember-indicator-center">
+                <h2 class="section-heading-lg" style="font-size: 4.5rem;">Let's Talk</h2>
+            </div>
+            <p style="font-size: 1.5rem; margin-top: 2rem; color: var(--on-surface-variant); max-width: 42rem; margin-left: auto; margin-right: auto;">
+                Ready to build something exceptional? Let's reach your goals together!
+            </p>
+            <div class="contact-links">
+                <a class="contact-card" href="mailto:warren@mixobarmobile.com">
+                    <span class="material-symbols-outlined text-primary">alternate_email</span>
+                    <div style="text-align: left;">
+                        <p class="label-md text-on-surface-variant">Email Me</p>
+                        <p style="font-weight: 700;">warren@mixobarmobile.com</p>
+                    </div>
+                </a>
+                <a class="contact-card" href="tel:559-312-3058">
+                    <span class="material-symbols-outlined text-primary">call</span>
+                    <div style="text-align: left;">
+                        <p class="label-md text-on-surface-variant">Call Me</p>
+                        <p style="font-weight: 700;">559-312-3058</p>
+                    </div>
+                </a>
+            </div>
+        </div>
+    </section>
+</main>
+
+<footer class="footer">
+    <div class="footer-inner">
+        <div style="font-weight: 900; text-transform: uppercase;">WARREN <span class="text-primary">.</span></div>
+        <div class="flex" style="gap: 2rem;">
+            <a href="https://www.linkedin.com/in/warrenwhitehurst/" target="_blank" class="text-on-surface-variant" style="font-size: 0.875rem;">LinkedIn</a>
+            <a href="https://github.com/Whitehurst87" target="_blank" class="text-on-surface-variant" style="font-size: 0.875rem;">GitHub</a>
+        </div>
+        <div class="text-on-surface-variant" style="font-size: 0.75rem;">
+            &copy; 2026 WARREN WHITEHURST. ALL RIGHTS RESERVED.
+        </div>
+    </div>
+</footer>
+
+<!-- GSAP + ScrollTrigger -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+
+<!-- Three.js -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/0.160.0/three.min.js"></script>
+
+<script>
+    // --- Three.js Implementation (90s Space Theme Aesthetic) ---
+    const canvas = document.querySelector('#three-canvas');
+    const renderer = new THREE.WebGLRenderer({ canvas, antialias: true, alpha: true });
+    renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+    renderer.setSize(window.innerWidth, window.innerHeight);
+
+    const scene = new THREE.Scene();
+    const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+    camera.position.z = 5;
+
+    // Lights - Bright and direct for that 90s flat-shaded look
+    const ambientLight = new THREE.AmbientLight(0xffffff, 1.2);
+    scene.add(ambientLight);
+
+    const dirLight = new THREE.DirectionalLight(0xffffff, 2);
+    dirLight.position.set(5, 5, 5);
+    scene.add(dirLight);
+
+    // Group to hold the 90s Sun
+    const sunGroup = new THREE.Group();
+    scene.add(sunGroup);
+
+    // The "90s Sun" - A large, colorful blocky Icosahedron
+    const sunGeometry = new THREE.IcosahedronGeometry(1.5, 0); // Level 0 for maximum blockiness
+    const sunMaterial = new THREE.MeshStandardMaterial({
+        color: 0xff9064, // Original primary orange
+        flatShading: true,
+        roughness: 0.6,
+        metalness: 0.3,
+        transparent: true
+    });
+    const sun = new THREE.Mesh(sunGeometry, sunMaterial);
+    sunGroup.add(sun);
+
+    // Chunky "Star Blocks" (Particles)
+    const starCount = 300;
+    const starGroup = new THREE.Group();
+    scene.add(starGroup);
+
+    const starGeom = new THREE.BoxGeometry(0.08, 0.08, 0.08); // Tiny blocks instead of points
+    const starColors = [0xffffff, 0xffd700, 0x4dabff, 0xff4d4d]; // Variety of 90s game colors
+
+    for (let i = 0; i < starCount; i++) {
+        const starMat = new THREE.MeshStandardMaterial({
+            color: starColors[Math.floor(Math.random() * starColors.length)],
+            flatShading: true
+        });
+        const star = new THREE.Mesh(starGeom, starMat);
+        
+        star.position.set(
+            (Math.random() - 0.5) * 20,
+            (Math.random() - 0.5) * 20,
+            (Math.random() - 0.5) * 20
+        );
+        star.rotation.set(Math.random() * Math.PI, Math.random() * Math.PI, 0);
+        
+        starGroup.add(star);
+    }
+
+    // Shooting Stars (Chunky 90s Streaks)
+    const shootingStarGroup = new THREE.Group();
+    scene.add(shootingStarGroup);
+    const shootingStars = [];
+    const shootingStarGeom = new THREE.BoxGeometry(0.1, 0.1, 4.0); // Stretched chunky box
+
+    for (let i = 0; i < 3; i++) {
+        const starMat = new THREE.MeshStandardMaterial({
+            color: 0xffffff,
+            flatShading: true,
+            emissive: 0xffffff,
+            emissiveIntensity: 0.5
+        });
+        const star = new THREE.Mesh(shootingStarGeom, starMat);
+        star.visible = false;
+        shootingStarGroup.add(star);
+        shootingStars.push({
+            mesh: star,
+            active: false,
+            timer: Math.random() * 600,
+            speed: 0.3 + Math.random() * 0.4
+        });
+    }
+
+    // Responsive Positioning
+    function updateSunPosition() {
+        if (window.innerWidth > 768) {
+            sunGroup.position.x = 2.5;
+            sunMaterial.opacity = 1;
+        } else {
+            sunGroup.position.x = 0;
+            sunMaterial.opacity = 0.2;
+        }
+    }
+    updateSunPosition();
+
+    // Mouse Interaction
+    let mouseX = 0;
+    let mouseY = 0;
+    window.addEventListener('mousemove', (e) => {
+        mouseX = (e.clientX / window.innerWidth) - 0.5;
+        mouseY = (e.clientY / window.innerHeight) - 0.5;
+    });
+
+    // Animation Loop
+    const clock = new THREE.Clock();
+
+    function animate() {
+        requestAnimationFrame(animate);
+        const elapsedTime = clock.getElapsedTime();
+
+        // 1. Sun Rotations & Bobbing
+        sun.rotation.y += 0.005;
+        sun.rotation.x += 0.002;
+        sunGroup.position.y = Math.sin(elapsedTime * 1.5) * 0.1;
+
+        // 2. Star Background Rotation
+        starGroup.rotation.y += 0.0003;
+        starGroup.children.forEach((star, i) => {
+            star.rotation.x += 0.01;
+            star.rotation.y += 0.01;
+            // Subtle pulse
+            const scale = 1 + Math.sin(elapsedTime * 2 + i) * 0.2;
+            star.scale.set(scale, scale, scale);
+        });
+
+        // 2.5 Shooting Stars Logic
+        shootingStars.forEach(s => {
+            if (s.active) {
+                s.mesh.position.x -= s.speed;
+                s.mesh.position.y -= s.speed;
+                s.mesh.position.z += s.speed * 0.5;
+                if (s.mesh.position.x < -15 || s.mesh.position.y < -15) {
+                    s.active = false;
+                    s.mesh.visible = false;
+                    s.timer = Math.random() * 600 + 200;
+                }
+            } else {
+                s.timer--;
+                if (s.timer <= 0) {
+                    s.active = true;
+                    s.mesh.visible = true;
+                    s.mesh.position.set(
+                        Math.random() * 20 - 5,
+                        Math.random() * 10 + 10,
+                        (Math.random() - 0.5) * 10
+                    );
+                    s.mesh.lookAt(s.mesh.position.x - 1, s.mesh.position.y - 1, s.mesh.position.z + 0.5);
+                }
+            }
+        });
+
+        // 3. Camera Parallax
+        camera.position.x += (mouseX * 2 - camera.position.x) * 0.05;
+        camera.position.y += (-(mouseY * 2) - camera.position.y) * 0.05;
+        camera.lookAt(0, 0, 0);
+
+        // 4. Dynamic Lighting (Premium Shadow Effect)
+        dirLight.position.x = 5 + mouseX * 10;
+        dirLight.position.y = 5 - mouseY * 10;
+
+        renderer.render(scene, camera);
+    }
+    animate();
+
+    // Resize
+    window.addEventListener('resize', () => {
+        camera.aspect = window.innerWidth / window.innerHeight;
+        camera.updateProjectionMatrix();
+        renderer.setSize(window.innerWidth, window.innerHeight);
+        updateSunPosition();
+    });
+
+
+    // --- Existing UI Logic ---
+    // Mobile Navigation
+    function openMobileNav() {
+        const nav = document.getElementById('mobileNav');
+        const btn = document.getElementById('hamburgerBtn');
+        nav.classList.add('open');
+        btn.classList.add('open');
+        document.body.style.overflow = 'hidden';
+    }
+    function closeMobileNav() {
+        const nav = document.getElementById('mobileNav');
+        const btn = document.getElementById('hamburgerBtn');
+        nav.classList.remove('open');
+        btn.classList.remove('open');
+        document.body.style.overflow = '';
+    }
+    document.getElementById('mobileNavClose').addEventListener('click', closeMobileNav);
+
+    // Active Nav Link on Scroll
+    const sections = document.querySelectorAll('section[id]');
+    const navLinks = document.querySelectorAll('.nav-link');
+
+    const activeObserver = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                const id = entry.target.id;
+                navLinks.forEach(link => {
+                    link.classList.toggle('active', link.getAttribute('href') === '#' + id);
+                });
+            }
+        });
+    }, { threshold: 0.35 });
+
+    sections.forEach(section => activeObserver.observe(section));
+
+    // GSAP Animations
+    gsap.registerPlugin(ScrollTrigger);
+
+    // Hero Entrance
+    const heroTl = gsap.timeline({ delay: 0.25 });
+    heroTl.from('#hero-eyebrow', { opacity: 0, y: 20, duration: 0.65 })
+          .from('#hero-heading', { opacity: 0, y: 50, duration: 0.9 }, '-=0.4')
+          .from('#hero-para', { opacity: 0, y: 30, duration: 0.8 }, '-=0.5')
+          .from('#hero-cta', { opacity: 0, y: 20, duration: 0.7 }, '-=0.4');
+
+    // Gallery staggered entrance
+    gsap.from('#gallery-grid .project-card', {
+        scrollTrigger: { trigger: '#gallery-grid', start: 'top 80%', once: true },
+        opacity: 0, y: 60, stagger: 0.1, duration: 0.8
+    });
+
+    // Tech cards cascade
+    gsap.from('#tech-grid .tech-card', {
+        scrollTrigger: { trigger: '#tech-grid', start: 'top 80%', once: true },
+        opacity: 0, y: 50, stagger: 0.15, duration: 0.7, ease: 'back.out(1.5)'
+    });
+
+    // Stats Counter
+    document.querySelectorAll('.stat-number').forEach(el => {
+        if (!el.dataset.count) return;
+        const target = parseInt(el.dataset.count);
+        const suffix = el.dataset.suffix || '';
+        const obj = { val: 0 };
+        gsap.to(obj, {
+            scrollTrigger: { trigger: el, start: 'top 90%', once: true },
+            val: target, duration: 2, ease: 'power2.out',
+            onUpdate: () => el.textContent = Math.round(obj.val) + suffix
+        });
+    });
+
+    // Fade Three.js background on About section
+    gsap.to('#three-canvas', {
+        scrollTrigger: {
+            trigger: '#about',
+            start: 'top 60%',
+            end: 'bottom 40%',
+            toggleActions: 'play reverse play reverse'
+        },
+        opacity: 0.2,
+        duration: 0.8
+    });
+</script>
+
+</body>
+</html>
