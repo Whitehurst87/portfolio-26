@@ -1,7 +1,3 @@
-/* 
-   Nocturnal Luminescence Design System
-   Vanilla CSS Implementation for index.html
-*/
 
 :root {
     /* Colors & Tonal Depth */
@@ -162,7 +158,7 @@ img {
 }
 
 .nav-link {
-    font-size: 0.625rem; /* 10px */
+    font-size: 0.825rem; /* 10px */
     font-weight: 800;
     text-transform: uppercase;
     letter-spacing: 0.1em;
