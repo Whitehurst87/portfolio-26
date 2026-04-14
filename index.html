@@ -26,9 +26,47 @@
         .hero-blob {
             display: none !important;
         }
+        /* ── Page Loader ── */
+        #page-loader {
+            position: fixed;
+            inset: 0;
+            z-index: 9999;
+            background-color: var(--surface, #0a0a0a);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: opacity 0.45s ease;
+        }
+        #page-loader.fade-out {
+            opacity: 0;
+            pointer-events: none;
+        }
     </style>
 </head>
 <body>
+
+<!-- ── Page Loader: shown while base64 textures decode ── -->
+<div id="page-loader">
+    <svg width="72" height="72" viewBox="0 0 72 72" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+        <!-- Outer orbit ring -->
+        <circle cx="36" cy="36" r="28" stroke="#6B8CFF" stroke-width="3" fill="none"
+                stroke-dasharray="70 106" stroke-linecap="round">
+            <animateTransform attributeName="transform" type="rotate"
+                              from="0 36 36" to="360 36 36" dur="1.1s" repeatCount="indefinite"/>
+        </circle>
+        <!-- Inner counter-orbit -->
+        <circle cx="36" cy="36" r="16" stroke="#6B8CFF" stroke-width="2" fill="none"
+                opacity="0.45" stroke-dasharray="36 68" stroke-linecap="round">
+            <animateTransform attributeName="transform" type="rotate"
+                              from="360 36 36" to="0 36 36" dur="1.7s" repeatCount="indefinite"/>
+        </circle>
+        <!-- Pulsing center dot -->
+        <circle cx="36" cy="36" r="4" fill="#6B8CFF" opacity="0.8">
+            <animate attributeName="r" values="3;5;3" dur="1.4s" repeatCount="indefinite"/>
+            <animate attributeName="opacity" values="0.6;1;0.6" dur="1.4s" repeatCount="indefinite"/>
+        </circle>
+    </svg>
+</div>
 
 <canvas id="three-canvas"></canvas>
 
@@ -375,6 +413,23 @@
     const codingSunMaterial = new THREE.SpriteMaterial({ transparent: true, opacity: 0 });
 
     // Load texture data from the data.js file with safety checks and robust image handling
+    // Track how many textures have finished loading so we can dismiss the page loader
+    let texturesLoaded = 0;
+    const TOTAL_TEXTURES = 2;
+
+    function onTextureReady() {
+        texturesLoaded++;
+        if (texturesLoaded >= TOTAL_TEXTURES) {
+            // Both base64 images have decoded — fade out the loader
+            const loader = document.getElementById('page-loader');
+            if (loader) {
+                loader.classList.add('fade-out');
+                // Remove from DOM after transition so it can't block clicks
+                loader.addEventListener('transitionend', () => loader.remove(), { once: true });
+            }
+        }
+    }
+
     if (typeof textureData !== 'undefined') {
         const spaceImg = new Image();
         spaceImg.onload = () => {
@@ -383,7 +438,9 @@
             texture.needsUpdate = true;
             spaceSunMaterial.map = texture;
             spaceSunMaterial.needsUpdate = true;
+            onTextureReady();
         };
+        spaceImg.onerror = () => { onTextureReady(); }; // still dismiss loader on error
         spaceImg.src = textureData.spaceBeaverTexture;
 
         const codingImg = new Image();
@@ -393,10 +450,18 @@
             texture.needsUpdate = true;
             codingSunMaterial.map = texture;
             codingSunMaterial.needsUpdate = true;
+            onTextureReady();
         };
+        codingImg.onerror = () => { onTextureReady(); }; // still dismiss loader on error
         codingImg.src = textureData.codingBeaverTexture;
     } else {
         console.error("Critical: 'textureData' is not defined. Check if data.js is correctly loaded via <script> tag.");
+        // Dismiss loader anyway so the page isn't permanently blocked
+        const loader = document.getElementById('page-loader');
+        if (loader) {
+            loader.classList.add('fade-out');
+            loader.addEventListener('transitionend', () => loader.remove(), { once: true });
+        }
     }
 
     const spaceSun = new THREE.Sprite(spaceSunMaterial);
@@ -456,13 +521,21 @@
         });
     }
 
-    // Responsive Positioning & Base Opacity
+    // Responsive Positioning & Opacity
+    // Opacity scales down on smaller screens so the beaver doesn't obscure text
+    function getBeaverOpacity() {
+        const w = window.innerWidth;
+        if (w < 768)  return 0.30;   // mobile – significantly reduced
+        if (w < 1200) return 0.52;   // tablet / laptop – moderately reduced
+        return 1.0;                   // large desktop – full
+    }
+
     let beaverActiveMode = 'space'; // 'space' or 'coding'
     function updateSunPosition() {
         const isDesktop = window.innerWidth > 768;
         sunGroup.position.x = isDesktop ? 2.5 : 0;
-        
-        const baseOpacity = 1;
+
+        const baseOpacity = getBeaverOpacity();
         if (beaverActiveMode === 'space') {
             spaceSunMaterial.opacity = baseOpacity;
             codingSunMaterial.opacity = 0;
@@ -597,19 +670,18 @@
           .from('#hero-cta', { opacity: 0, y: 20, duration: 0.7 }, '-=0.4');
 
     // Beaver Mode Cross-fade at Expertise
+    // Uses getBeaverOpacity() so responsive opacity rules are respected on all screen sizes
     ScrollTrigger.create({
         trigger: '#expertise',
         start: 'top 80%',
         onEnter: () => {
             beaverActiveMode = 'coding';
-            const targetOpacity = 1;
             gsap.to(spaceSunMaterial, { opacity: 0, duration: 0.8 });
-            gsap.to(codingSunMaterial, { opacity: targetOpacity, duration: 0.8 });
+            gsap.to(codingSunMaterial, { opacity: getBeaverOpacity(), duration: 0.8 });
         },
         onLeaveBack: () => {
             beaverActiveMode = 'space';
-            const targetOpacity = 1;
-            gsap.to(spaceSunMaterial, { opacity: targetOpacity, duration: 0.8 });
+            gsap.to(spaceSunMaterial, { opacity: getBeaverOpacity(), duration: 0.8 });
             gsap.to(codingSunMaterial, { opacity: 0, duration: 0.8 });
         }
     });
